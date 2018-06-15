@@ -3,23 +3,16 @@ import { connect } from 'react-redux'
 import Blog from './Blog'
 
 
-const BlogList = ({ blogs, blogsCount}) => (
+const BlogList = ({ blogs }) => (
   <div>
-    <h3>Total Blogs: {blogsCount}</h3>
-    <ul>
-      {blogs.map((b) =>
-        <Blog key={b.id} {...b} />
-      )}
-    </ul>
+    {blogs.map((b) =>
+      <Blog key={b.id} {...b} />
+    )}
   </div>
 )
 
 const mapStateToProps = (state) => {
-  const { blogs } = state
-  return {
-    blogs,
-    blogsCount: blogs.length
-  }
+  return {blogs: state.blogs}
 }
 
 export default connect(mapStateToProps)(BlogList)

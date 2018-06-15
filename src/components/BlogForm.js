@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { addBlog } from '../reducers/blogs';
+import {incId} from '../reducers/nextId';
 
 class BlogForm extends React.Component {
   state = { title: '', body: '', id: '' }
@@ -9,9 +10,9 @@ class BlogForm extends React.Component {
     e.preventDefault()
     const { dispatch, id} = this.props
     const { title, body} = this.state
-    debugger
-    const blog = {title, id, body}
+    const blog = {title, body, id}
     dispatch(addBlog(blog))
+    dispatch(incId())
     this.setState({ title: '', body: '' })
   }
 
@@ -21,25 +22,13 @@ class BlogForm extends React.Component {
   }
 
   render(){
-    const { title, body, id } = this.state
+    const { title, body } = this.state
     return (
       <div>
         <h3>Add A Blog</h3>
         <form onSubmit={this.handleSubmit}>
-          <input
-            name="title"
-            placeholder="Title"
-            value={title}
-            onChange={this.handleChange}
-            require
-          />
-          <input
-            name="body"
-            placeholder="Body"
-            value={body}
-            onChange={this.handleChange}
-            require
-          />
+          <input name="title" value={title} onChange={this.handleChange} placeholder="Title" require />
+          <input name="body" value={body} onChange={this.handleChange} require placeholder="Body" />
           <button>Post</button>
         </form>
       </div>
@@ -47,6 +36,10 @@ class BlogForm extends React.Component {
   }
 }
 
+const mapStateToProps = (state) => {
+  return {id: state.nextId}
+}
 
 
-export default connect()(BlogForm)
+
+export default connect(mapStateToProps)(BlogForm)
