@@ -3,13 +3,13 @@ import { connect } from 'react-redux';
 import { addBlog } from '../reducers/blogs';
 
 class BlogForm extends React.Component {
-  state = { title: '', body: '' }
+  state = { title: '', body: '', id: '' }
 
   handleSubmit = (e) => {
     e.preventDefault()
+    const { dispatch, id} = this.props
+    const { title, body} = this.state
     debugger
-    const { dispatch, id } = this.props
-    const { title, body } = this.state 
     const blog = {title, id, body}
     dispatch(addBlog(blog))
     this.setState({ title: '', body: '' })
@@ -21,7 +21,7 @@ class BlogForm extends React.Component {
   }
 
   render(){
-    const { title, body } = this.state
+    const { title, body, id } = this.state
     return (
       <div>
         <h3>Add A Blog</h3>
